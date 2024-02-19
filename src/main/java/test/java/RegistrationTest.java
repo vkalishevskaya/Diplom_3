@@ -1,19 +1,20 @@
 package test.java;
-import main.java.DriverRule;
+import main.java.WebDriverFactory;
 import main.java.EnvConfig;
 import main.java.RegistrationPage;
 import main.java.LoginPage;
 import org.junit.Rule;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
 
 
 public class RegistrationTest {
-    @Rule
-    public DriverRule driverRule = new DriverRule();
+    WebDriverFactory webDriverFactory = new WebDriverFactory();
+    public WebDriver driver;
 
     @Test // Регистрация с валидным паролем
     public void registration() {
-        RegistrationPage registrationPage = new RegistrationPage(driverRule.getDriver())
+        RegistrationPage registrationPage = new RegistrationPage(webDriverFactory.getDriver())
                 .open()
                 .waitForRegisterPageHeader()
                 .typeName(EnvConfig.DEFAULT_NAME)
@@ -24,7 +25,7 @@ public class RegistrationTest {
     }
     @Test // Регистрация с валидным паролем
     public void registrationInvalid() {
-        RegistrationPage registrationPage = new RegistrationPage(driverRule.getDriver())
+        RegistrationPage registrationPage = new RegistrationPage(webDriverFactory.getDriver())
                 .open()
                 .waitForRegisterPageHeader()
                 .typeName(EnvConfig.DEFAULT_NAME)

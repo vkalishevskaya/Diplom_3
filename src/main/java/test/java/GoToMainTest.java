@@ -9,8 +9,8 @@ import main.api.UserGenerator;
 import main.java.*;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
 
 public class GoToMainTest {
     private final UserGenerator generator = new UserGenerator();
@@ -19,30 +19,28 @@ public class GoToMainTest {
     private String accessToken;
     private String email;
     private String password;
+    public WebDriverFactory webDriverFactory = new WebDriverFactory();
+    public WebDriver driver;
 
     @Before
     @DisplayName("successful login")
     @Description("Creating new user and login with data")
     public void userLogin() {
-            var user = generator.random();
-            Response creationResponse = client.createUser(user);
-            check.userCreatedSuccessfully(creationResponse);
-            this.accessToken = creationResponse.path("accessToken");
-            this.email = user.getEmail();
-            this.password = user.getPassword();
+        var user = generator.random();
+        Response creationResponse = client.createUser(user);
+        check.userCreatedSuccessfully(creationResponse);
+        this.accessToken = creationResponse.path("accessToken");
+        this.email = user.getEmail();
+        this.password = user.getPassword();
 
-            LoginPage loginPage = new LoginPage(driverRule.getDriver())
-                    .open()
-                    .waitForLoginPageHeader()
-                    .typeEmail(email)
-                    .typePassword(password);
-            MainPage main = loginPage.clickLoginButton()
-                    .waitForMainPageHeader();
-        }
-
-    @Rule
-    public DriverRule driverRule = new DriverRule();
-
+        LoginPage loginPage = new LoginPage(webDriverFactory.getDriver())
+                .open()
+                .waitForLoginPageHeader()
+                .typeEmail(email)
+                .typePassword(password);
+        MainPage main = loginPage.clickLoginButton()
+                .waitForMainPageHeader();
+    }
 
     @After
     public void deleteUser() {
@@ -53,7 +51,7 @@ public class GoToMainTest {
     }
     @Test
     public void openConstructorWithButton(){
-        AccountPage accountPage = new AccountPage(driverRule.getDriver())
+        AccountPage accountPage = new AccountPage(webDriverFactory.getDriver())
                 .open()
                 .waitForAccountMenu();
         MainPage mainPage = accountPage.clickConstructorButton()
@@ -61,7 +59,7 @@ public class GoToMainTest {
     }
     @Test
     public void openConstructorWithLogoButton(){
-        AccountPage accountPage = new AccountPage(driverRule.getDriver())
+        AccountPage accountPage = new AccountPage(webDriverFactory.getDriver())
                 .open()
                 .waitForAccountMenu();
         MainPage mainPage = accountPage.clickLogoButton()

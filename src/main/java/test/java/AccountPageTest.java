@@ -8,9 +8,10 @@ import main.api.UserGenerator;
 import main.java.*;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import io.restassured.response.Response;
+import org.openqa.selenium.WebDriver;
+
 
 
 public class AccountPageTest {
@@ -21,18 +22,21 @@ public class AccountPageTest {
     private String accessToken;
     private String email;
     private String password;
+    WebDriverFactory webDriverFactory = new WebDriverFactory();
+    WebDriver driver;
+
     @Before
     @DisplayName("successful login")
     @Description("Creating new user and login with data")
     public void userLogin() {
         var user = generator.random();
-        Response creationResponse = (Response) client.createUser(user);
+        Response creationResponse = client.createUser(user);
         check.userCreatedSuccessfully(creationResponse);
         this.accessToken = creationResponse.path("accessToken");
         this.email = user.getEmail();
         this.password = user.getPassword();
 
-        LoginPage loginPage = new LoginPage(driverRule.getDriver())
+        LoginPage loginPage = new LoginPage(webDriverFactory.getDriver())
                 .open()
                 .waitForLoginPageHeader()
                 .typeEmail(email)
@@ -41,8 +45,6 @@ public class AccountPageTest {
                 .waitForMainPageHeader();
     }
 
-    @Rule
-    public DriverRule driverRule = new DriverRule();
 
     @After
     public void deleteUser() {
@@ -54,12 +56,10 @@ public class AccountPageTest {
 
     @Test
     public void accountOpening(){
-        MainPage mainPage = new MainPage(driverRule.getDriver())
+        MainPage mainPage = new MainPage(webDriverFactory.getDriver())
                 .open()
                 .waitForMainPageHeader();
         AccountPage accountPage = mainPage.clickAccountButton()
                 .waitForAccountMenu();
     }
-
-
 }

@@ -10,6 +10,7 @@ import org.junit.Before;
 import io.restassured.response.Response;
 import org.junit.Rule;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
 
 public class LoginTest {
     private final UserGenerator generator = new UserGenerator();
@@ -20,23 +21,23 @@ public class LoginTest {
     private String password;
 
 
-    @Rule
-    public DriverRule driverRule = new DriverRule();
+    WebDriverFactory webDriverFactory = new WebDriverFactory();
+    public WebDriver driver;
 
     @Before
     @Step ("Create new user")
-        public void userCreate() {
-            var user = generator.random();
-            Response creationResponse = (Response) client.createUser(user);
-            check.userCreatedSuccessfully(creationResponse);
-            this.accessToken = creationResponse.path("accessToken");
-            this.email = user.getEmail();
-            this.password = user.getPassword();
-        }
+    public void userCreate() {
+        var user = generator.random();
+        Response creationResponse = (Response) client.createUser(user);
+        check.userCreatedSuccessfully(creationResponse);
+        this.accessToken = creationResponse.path("accessToken");
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+    }
 
     @Test
-        public void userLoginAccountButton(){
-        MainPage mainPage = new MainPage(driverRule.getDriver())
+    public void userLoginAccountButton(){
+        MainPage mainPage = new MainPage(webDriverFactory.getDriver())
                 .open()
                 .waitForMainPageHeader();
         LoginPage loginPage = mainPage.clickAccountButtonLogin()
@@ -47,7 +48,7 @@ public class LoginTest {
     }
     @Test
     public void userLoginButton(){
-        MainPage mainPage = new MainPage(driverRule.getDriver())
+        MainPage mainPage = new MainPage(webDriverFactory.getDriver())
                 .open()
                 .waitForMainPageHeader();
         LoginPage loginPage = mainPage.clickLoginButton()
@@ -58,7 +59,7 @@ public class LoginTest {
     }
     @Test
     public void loginFromRegistrationPage(){
-        RegistrationPage registrationPage = new RegistrationPage(driverRule.getDriver());
+        RegistrationPage registrationPage = new RegistrationPage(webDriverFactory.getDriver());
         registrationPage.open()
                 .scrollToLoginButton();
         LoginPage loginPage = registrationPage.clickLoginButton()
@@ -69,7 +70,7 @@ public class LoginTest {
     }
     @Test
     public void loginFromPasswordPage(){
-        PasswordRenewalPage passwordPage = new PasswordRenewalPage(driverRule.getDriver())
+        PasswordRenewalPage passwordPage = new PasswordRenewalPage(webDriverFactory.getDriver())
                 .open();
         LoginPage loginPage = passwordPage.clickSignInButton()
                 .waitForLoginPageHeader()

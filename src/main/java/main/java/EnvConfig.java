@@ -13,8 +13,6 @@ public class EnvConfig {
         public static final String DEFAULT_EMAIL = "ivanov@yandex.ru";
         public static final String DEFAULT_PASSWORD = RandomStringUtils.randomAlphanumeric(7);
         public static final String INVALID_PASSWORD = RandomStringUtils.randomAlphanumeric(5);
-        public static final String PHONE_NUMBER_WITHOUT_PLUS = "1234567890000";
-        public static final String EXP_DATE = "01.01.2023";
         public static final String WEB_DRIVER_CHROME = "/Users/v.kalishevskaya/Downloads/chromedriver-mac-x64/chromedriver";
         public static final String WEB_DRIVER_FIREFOX = "/Users/v.kalishevskaya/Downloads/geckodriver";
 

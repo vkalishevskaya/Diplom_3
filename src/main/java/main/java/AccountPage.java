@@ -11,9 +11,9 @@ public class AccountPage {
     public static final By constructorButton = By.xpath(".//li[1]/a/p");
     public static final By logoButton = By.xpath(".//nav/div");
     public AccountPage(WebDriver driver) {
-        this.driver = driver;
-    }
+        this.driver = driver;}
 
+    @Step("Go to account page")
     public AccountPage open() {
         driver.get(EnvConfig.ACCOUNT_URL);
         return this;
@@ -33,7 +33,7 @@ public class AccountPage {
         driver.findElement(constructorButton).click();
         return new MainPage(driver);
     }
-    @Step("Go to constructor page through button")
+    @Step("Go to constructor page through logo")
     public MainPage clickLogoButton(){
         driver.findElement(logoButton).click();
         return new MainPage(driver);

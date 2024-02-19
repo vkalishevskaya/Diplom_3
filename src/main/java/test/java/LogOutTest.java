@@ -7,13 +7,14 @@ import main.api.Assertions;
 import main.api.UserClient;
 import main.api.UserGenerator;
 import main.java.AccountPage;
-import main.java.DriverRule;
+import main.java.WebDriverFactory;
 import main.java.LoginPage;
 import main.java.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
 
 public class LogOutTest {
     private final UserGenerator generator = new UserGenerator();
@@ -22,6 +23,9 @@ public class LogOutTest {
     private String accessToken;
     private String email;
     private String password;
+    WebDriverFactory webDriverFactory = new WebDriverFactory();
+    public WebDriver driver;
+
     @Before
     @DisplayName("successful login")
     @Description("Creating new user and login with data")
@@ -33,7 +37,7 @@ public class LogOutTest {
         this.email = user.getEmail();
         this.password = user.getPassword();
 
-        LoginPage loginPage = new LoginPage(driverRule.getDriver());
+        LoginPage loginPage = new LoginPage(webDriverFactory.getDriver());
         loginPage.open()
                 .waitForLoginPageHeader()
                 .typeEmail(email)
@@ -42,8 +46,6 @@ public class LogOutTest {
                 .waitForMainPageHeader();
 
     }
-    @Rule
-    public DriverRule driverRule = new DriverRule();
 
     @After
     public void deleteUser() {
@@ -54,7 +56,7 @@ public class LogOutTest {
     }
     @Test
     public void logOut(){
-        AccountPage accountPage = new AccountPage(driverRule.getDriver())
+        AccountPage accountPage = new AccountPage(webDriverFactory.getDriver())
                 .open()
                 .waitForAccountMenu();
         LoginPage loginPage = accountPage.clickLogOutButton()
