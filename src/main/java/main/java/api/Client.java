@@ -1,4 +1,4 @@
-package main.api;
+package main.java.api;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 

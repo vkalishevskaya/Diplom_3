@@ -3,9 +3,9 @@ package test.java;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
-import main.api.Assertions;
-import main.api.UserClient;
-import main.api.UserGenerator;
+import main.java.api.Assertions;
+import main.java.api.UserClient;
+import main.java.api.UserGenerator;
 import main.java.AccountPage;
 import main.java.WebDriverFactory;
 import main.java.LoginPage;
@@ -14,6 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class LogOutTest {
     private final UserGenerator generator = new UserGenerator();
@@ -22,7 +23,6 @@ public class LogOutTest {
     private String accessToken;
     private String email;
     private String password;
-    WebDriverFactory webDriverFactory = new WebDriverFactory();
     public WebDriver driver;
 
     @Before
@@ -36,7 +36,8 @@ public class LogOutTest {
         this.email = user.getEmail();
         this.password = user.getPassword();
 
-        LoginPage loginPage = new LoginPage(webDriverFactory.getDriver());
+        driver = new ChromeDriver();
+        LoginPage loginPage = new LoginPage(driver);
         loginPage.open()
                 .waitForLoginPageHeader()
                 .typeEmail(email)
@@ -55,7 +56,7 @@ public class LogOutTest {
     }
     @Test
     public void logOut(){
-        AccountPage accountPage = new AccountPage(webDriverFactory.getDriver())
+        AccountPage accountPage = new AccountPage(driver)
                 .open()
                 .waitForAccountMenu();
         LoginPage loginPage = accountPage.clickLogOutButton()

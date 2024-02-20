@@ -5,21 +5,22 @@ import main.java.MainPage;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class ConstructorTest {
-    WebDriverFactory webDriverFactory = new WebDriverFactory();
 
-    public WebDriver driver;
+    WebDriver driver;
 
     @Before
     public void mainPageOpen(){
-        MainPage mainPage = new MainPage(webDriverFactory.getDriver())
+        driver = new ChromeDriver();
+        MainPage mainPage = new MainPage(driver)
                 .open();
     }
 
     @Test
     public void bunConstructorChapter(){
-        MainPage mainPage = new MainPage(webDriverFactory.getDriver())
+        MainPage mainPage = new MainPage(driver)
                 .waitForMainPageHeader()
                 .clickFillingButton()
                 .waitForFillingHeader()
@@ -28,7 +29,7 @@ public class ConstructorTest {
     }
     @Test
     public void saucesConstructorChapter(){
-        MainPage mainPage = new MainPage(webDriverFactory.getDriver())
+        MainPage mainPage = new MainPage(driver)
                 .waitForMainPageHeader()
                 .clickFillingButton()
                 .waitForFillingHeader()
@@ -37,7 +38,7 @@ public class ConstructorTest {
     }
     @Test
     public void fillingConstructorChapter(){
-        MainPage mainPage = new MainPage(webDriverFactory.getDriver())
+        MainPage mainPage = new MainPage(driver)
                 .waitForMainPageHeader()
                 .clickFillingButton()
                 .waitForFillingHeader();

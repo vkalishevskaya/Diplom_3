@@ -8,13 +8,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 
 public class WebDriverFactory extends ExternalResource {
-     WebDriver driver;
-
-    @After
-    protected void teardown() {
-        driver.quit();
-    }
-
 
     public WebDriver getDriver(){
         switch (System.getProperty("browser", "chrome")) {
@@ -28,6 +21,5 @@ public class WebDriverFactory extends ExternalResource {
                 return new ChromeDriver();
         }
     }
-
 
 }

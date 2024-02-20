@@ -1,15 +1,16 @@
 package test.java;
 
 import io.qameta.allure.Step;
-import main.api.Assertions;
-import main.api.UserClient;
-import main.api.UserGenerator;
+import main.java.api.Assertions;
+import main.java.api.UserClient;
+import main.java.api.UserGenerator;
 import main.java.*;
 import org.junit.After;
 import org.junit.Before;
 import io.restassured.response.Response;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class LoginTest {
     private final UserGenerator generator = new UserGenerator();
@@ -19,13 +20,13 @@ public class LoginTest {
     private String email;
     private String password;
 
-
-    WebDriverFactory webDriverFactory = new WebDriverFactory();
-    public WebDriver driver;
+    WebDriver driver;
 
     @Before
     @Step ("Create new user")
     public void userCreate() {
+        driver = new ChromeDriver();
+
         var user = generator.random();
         Response creationResponse = (Response) client.createUser(user);
         check.userCreatedSuccessfully(creationResponse);
@@ -36,7 +37,7 @@ public class LoginTest {
 
     @Test
     public void userLoginAccountButton(){
-        MainPage mainPage = new MainPage(webDriverFactory.getDriver())
+        MainPage mainPage = new MainPage(driver)
                 .open()
                 .waitForMainPageHeader();
         LoginPage loginPage = mainPage.clickAccountButtonLogin()
@@ -47,7 +48,7 @@ public class LoginTest {
     }
     @Test
     public void userLoginButton(){
-        MainPage mainPage = new MainPage(webDriverFactory.getDriver())
+        MainPage mainPage = new MainPage(driver)
                 .open()
                 .waitForMainPageHeader();
         LoginPage loginPage = mainPage.clickLoginButton()
@@ -58,7 +59,7 @@ public class LoginTest {
     }
     @Test
     public void loginFromRegistrationPage(){
-        RegistrationPage registrationPage = new RegistrationPage(webDriverFactory.getDriver());
+        RegistrationPage registrationPage = new RegistrationPage(driver);
         registrationPage.open()
                 .scrollToLoginButton();
         LoginPage loginPage = registrationPage.clickLoginButton()
@@ -69,7 +70,7 @@ public class LoginTest {
     }
     @Test
     public void loginFromPasswordPage(){
-        PasswordRenewalPage passwordPage = new PasswordRenewalPage(webDriverFactory.getDriver())
+        PasswordRenewalPage passwordPage = new PasswordRenewalPage(driver)
                 .open();
         LoginPage loginPage = passwordPage.clickSignInButton()
                 .waitForLoginPageHeader()

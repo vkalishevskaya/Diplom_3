@@ -1,4 +1,4 @@
-package main.api;
+package main.java.api;
 
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.RandomStringUtils;

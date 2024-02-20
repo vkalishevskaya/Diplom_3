@@ -3,14 +3,15 @@ package test.java;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
-import main.api.Assertions;
-import main.api.UserClient;
-import main.api.UserGenerator;
+import main.java.api.Assertions;
+import main.java.api.UserClient;
+import main.java.api.UserGenerator;
 import main.java.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class GoToMainTest {
     private final UserGenerator generator = new UserGenerator();
@@ -19,7 +20,7 @@ public class GoToMainTest {
     private String accessToken;
     private String email;
     private String password;
-    public WebDriverFactory webDriverFactory = new WebDriverFactory();
+
     public WebDriver driver;
 
     @Before
@@ -33,7 +34,8 @@ public class GoToMainTest {
         this.email = user.getEmail();
         this.password = user.getPassword();
 
-        LoginPage loginPage = new LoginPage(webDriverFactory.getDriver())
+        driver = new ChromeDriver();
+        LoginPage loginPage = new LoginPage(driver)
                 .open()
                 .waitForLoginPageHeader()
                 .typeEmail(email)
@@ -49,9 +51,10 @@ public class GoToMainTest {
             check.deletedSuccessfully(response);
         }
     }
+
     @Test
     public void openConstructorWithButton(){
-        AccountPage accountPage = new AccountPage(webDriverFactory.getDriver())
+        AccountPage accountPage = new AccountPage(driver)
                 .open()
                 .waitForAccountMenu();
         MainPage mainPage = accountPage.clickConstructorButton()
@@ -59,7 +62,7 @@ public class GoToMainTest {
     }
     @Test
     public void openConstructorWithLogoButton(){
-        AccountPage accountPage = new AccountPage(webDriverFactory.getDriver())
+        AccountPage accountPage = new AccountPage(driver)
                 .open()
                 .waitForAccountMenu();
         MainPage mainPage = accountPage.clickLogoButton()

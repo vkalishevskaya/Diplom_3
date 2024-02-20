@@ -1,24 +1,19 @@
 package test.java;
-import io.restassured.response.Response;
-import main.api.Assertions;
-import main.api.UserClient;
-import main.api.UserGenerator;
-import main.java.WebDriverFactory;
 import main.java.EnvConfig;
 import main.java.RegistrationPage;
 import main.java.LoginPage;
-import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 
 public class RegistrationTest {
-    WebDriverFactory webDriverFactory = new WebDriverFactory();
-    public WebDriver driver;
+    WebDriver driver = new ChromeDriver();
 
     @Test // Регистрация с валидным паролем
     public void registration() {
-        RegistrationPage registrationPage = new RegistrationPage(webDriverFactory.getDriver())
+        RegistrationPage registrationPage = new RegistrationPage(driver)
                 .open()
                 .waitForRegisterPageHeader()
                 .typeName(EnvConfig.DEFAULT_NAME)
@@ -29,7 +24,7 @@ public class RegistrationTest {
     }
     @Test // Регистрация с валидным паролем
     public void registrationInvalid() {
-        RegistrationPage registrationPage = new RegistrationPage(webDriverFactory.getDriver())
+        RegistrationPage registrationPage = new RegistrationPage(driver)
                 .open()
                 .waitForRegisterPageHeader()
                 .typeName(EnvConfig.DEFAULT_NAME)
@@ -37,6 +32,10 @@ public class RegistrationTest {
                 .typePassword(EnvConfig.INVALID_PASSWORD)
                 .clickSignUpButtonInvalid()
                 .waitForInvalidPasswordMessage();
+    }
+    @After
+    public void teardown() {
+        driver.quit();
     }
 
 }
