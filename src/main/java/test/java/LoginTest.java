@@ -8,7 +8,6 @@ import main.java.*;
 import org.junit.After;
 import org.junit.Before;
 import io.restassured.response.Response;
-import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 

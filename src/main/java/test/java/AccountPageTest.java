@@ -8,10 +8,10 @@ import main.api.UserGenerator;
 import main.java.*;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import io.restassured.response.Response;
 import org.openqa.selenium.WebDriver;
-
 
 
 public class AccountPageTest {
@@ -22,8 +22,12 @@ public class AccountPageTest {
     private String accessToken;
     private String email;
     private String password;
-    WebDriverFactory webDriverFactory = new WebDriverFactory();
-    WebDriver driver;
+
+
+    @Rule
+    public WebDriverFactory webDriverFactory = new WebDriverFactory();
+    public WebDriver driver;
+
 
     @Before
     @DisplayName("successful login")

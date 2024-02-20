@@ -1,9 +1,13 @@
 package test.java;
+import io.restassured.response.Response;
+import main.api.Assertions;
+import main.api.UserClient;
+import main.api.UserGenerator;
 import main.java.WebDriverFactory;
 import main.java.EnvConfig;
 import main.java.RegistrationPage;
 import main.java.LoginPage;
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 

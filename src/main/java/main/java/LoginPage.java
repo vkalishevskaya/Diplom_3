@@ -11,9 +11,10 @@ public class LoginPage {
     private static final By passwordField = By.xpath(".//fieldset[2]/div/div/input");
     private static final By loginButton = By.className("button_button__33qZ0");
 
-    public LoginPage(WebDriver driver) {
-        this.driver = driver;
-    }
+    public LoginPage(WebDriver driver)
+     {
+         this.driver = driver;
+     }
 
     public LoginPage open() {
         driver.get(EnvConfig.LOGIN_URL);
