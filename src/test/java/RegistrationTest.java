@@ -1,7 +1,3 @@
-package test.java;
-import main.java.EnvConfig;
-import main.java.RegistrationPage;
-import main.java.LoginPage;
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -35,7 +31,7 @@ public class RegistrationTest {
     }
     @After
     public void teardown() {
-        driver.quit();
+        driver.close();
     }
 
 }

@@ -1,28 +1,23 @@
-package test.java;
-
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import main.java.api.Assertions;
 import main.java.api.UserClient;
 import main.java.api.UserGenerator;
-import main.java.AccountPage;
-import main.java.WebDriverFactory;
-import main.java.LoginPage;
-import main.java.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class LogOutTest {
+public class GoToMainTest {
     private final UserGenerator generator = new UserGenerator();
     private final UserClient client = new UserClient();
     private final Assertions check = new Assertions();
     private String accessToken;
     private String email;
     private String password;
+
     public WebDriver driver;
 
     @Before
@@ -37,14 +32,13 @@ public class LogOutTest {
         this.password = user.getPassword();
 
         driver = new ChromeDriver();
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.open()
+        LoginPage loginPage = new LoginPage(driver)
+                .open()
                 .waitForLoginPageHeader()
                 .typeEmail(email)
                 .typePassword(password);
-        MainPage mainPage = loginPage.clickLoginButton()
+        MainPage main = loginPage.clickLoginButton()
                 .waitForMainPageHeader();
-
     }
 
     @After
@@ -54,12 +48,25 @@ public class LogOutTest {
             check.deletedSuccessfully(response);
         }
     }
+    @After
+    public void teardown() {
+        driver.close();
+    }
+
     @Test
-    public void logOut(){
+    public void openConstructorWithButton(){
         AccountPage accountPage = new AccountPage(driver)
                 .open()
                 .waitForAccountMenu();
-        LoginPage loginPage = accountPage.clickLogOutButton()
-                .waitForLoginPageHeader();
+        MainPage mainPage = accountPage.clickConstructorButton()
+                .waitForMainPageHeader();
+    }
+    @Test
+    public void openConstructorWithLogoButton(){
+        AccountPage accountPage = new AccountPage(driver)
+                .open()
+                .waitForAccountMenu();
+        MainPage mainPage = accountPage.clickLogoButton()
+                .waitForMainPageHeader();
     }
 }

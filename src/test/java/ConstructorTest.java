@@ -1,7 +1,4 @@
-package test.java;
-
-import main.java.WebDriverFactory;
-import main.java.MainPage;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +13,10 @@ public class ConstructorTest {
         driver = new ChromeDriver();
         MainPage mainPage = new MainPage(driver)
                 .open();
+    }
+    @After
+    public void teardown() {
+        driver.close();
     }
 
     @Test

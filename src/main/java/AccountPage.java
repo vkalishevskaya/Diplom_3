@@ -1,7 +1,4 @@
-package main.java;
-
 import io.qameta.allure.Step;
-import org.junit.Rule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 public class AccountPage {

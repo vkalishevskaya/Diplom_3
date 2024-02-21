@@ -1,5 +1,3 @@
-package main.java;
-
 import org.junit.After;
 import org.junit.rules.ExternalResource;
 import org.openqa.selenium.WebDriver;

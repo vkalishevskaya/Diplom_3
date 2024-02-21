@@ -1,13 +1,10 @@
-package test.java;
-
 import io.qameta.allure.Step;
+import io.restassured.response.Response;
 import main.java.api.Assertions;
 import main.java.api.UserClient;
 import main.java.api.UserGenerator;
-import main.java.*;
 import org.junit.After;
 import org.junit.Before;
-import io.restassured.response.Response;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -34,6 +31,10 @@ public class LoginTest {
         this.email = user.getEmail();
         this.password = user.getPassword();
     }
+    @After
+    public void teardown() {
+        driver.close();
+    }
 
     @Test
     public void userLoginAccountButton(){
@@ -44,7 +45,8 @@ public class LoginTest {
                 .waitForLoginPageHeader()
                 .typeEmail(email)
                 .typePassword(password);
-        MainPage main = loginPage.clickLoginButton();
+        MainPage main = loginPage.clickLoginButton()
+                .waitForMainPageHeader();
     }
     @Test
     public void userLoginButton(){
@@ -55,7 +57,8 @@ public class LoginTest {
                 .waitForLoginPageHeader()
                 .typeEmail(email)
                 .typePassword(password);
-        MainPage main = loginPage.clickLoginButton();
+        MainPage main = loginPage.clickLoginButton()
+                .waitForMainPageHeader();
     }
     @Test
     public void loginFromRegistrationPage(){
@@ -76,7 +79,8 @@ public class LoginTest {
                 .waitForLoginPageHeader()
                 .typeEmail(email)
                 .typePassword(password);
-        MainPage main = loginPage.clickLoginButton();
+        MainPage main = loginPage.clickLoginButton()
+                .waitForMainPageHeader();
     }
 
     @After
